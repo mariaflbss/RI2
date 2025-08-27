@@ -1,115 +1,135 @@
-function Cliente(nome, telefoneCelular, email, endereco){
+function Cliente(nome, telefoneCelular, email, endereco) {
     this.nome = nome
     this.telefoneCelular = telefoneCelular
     this.email = email
     this.endereco = endereco
+
     Object.defineProperty(this, 'descricao', {
-        get: function(){
-            return "\n"+ "Informações do cliente: \n" + this.nome + "\n\n " 
+    get: function () {
+        return (
+            " \n" +
+            "Informações do cliente:\n" +
+            this.nome + "\n" +
+            "------------------------\n" +
+            "------------------------\n" +
+            this.telefoneCelular.descricao +
+            "----------------------\n" +
+            this.endereco.descricao +
+            "-----------------------\n"
+            );
         }
-    })
+    });
+
     Object.defineProperty(this, 'getName', {
-        get: function(){
+        get: function () {
             return this.nome
         }
-    })
+    });
+
     Object.defineProperty(this, 'setName', {
-        set: function(value){
+        set: function (value) {
             this.nome = value.toLowerCase()
         }
-    })
+    });
+
     Object.defineProperty(this, 'setMail', {
-        set: function(value){
+        set: function (value) {
             this.email = value.toLowerCase()
         }
-    })
-
+    });
 }
 
-function Telefone(ddd, numero){
-    this.ddd = ddd,
+function Telefone(ddd, numero) {
+    this.ddd = ddd
     this.numero = numero
+
     Object.defineProperty(this, 'descricao', {
-        get: function(){
+        get: function () {
             return 'DDD: ' + this.ddd + '\nNumero: ' + this.numero + '\n'
         }
-    })
+    });
 
     Object.defineProperty(this, 'setDDD', {
-        set: function(value){
+        set: function (value) {
             this.ddd = value
         }
-    })
+    });
 
     Object.defineProperty(this, 'setNum', {
-        set: function(value){
+        set: function (value) {
             this.numero = value
         }
-    })
+    });
 }
 
-function Endereco(uf, cidade, rua, num){
+function Endereco(uf, cidade, rua, num) {
     this.uf = uf
     this.cidade = cidade
     this.rua = rua
     this.num = num
+
     Object.defineProperty(this, 'setRua', {
         set: function (value) {
             this.rua = value.toLowerCase()
         }
-    })
+    });
+
     Object.defineProperty(this, 'setNum', {
         set: function (value) {
-            this.num = nvalue
+            this.num = value
         }
-    })
+    });
+
     Object.defineProperty(this, 'setCidade', {
         set: function (value) {
             this.cidade = value.toLowerCase()
         }
-    })
+    });
+
     Object.defineProperty(this, 'setEstado', {
         set: function (value) {
             this.uf = value.toUpperCase()
         }
-    })
+    });
+
     Object.defineProperty(this, 'descricao', {
-        get: function() {
-            return 'Endereço: \nRua: ' + this.rua + '\nNúmero: ' + this.num + '\nCidade: ' + this.cidade + '\nEstado: ' + this.uf.toUpperCase() + "\n\n"
-        }
-    })
+    get: function () {
+        return (
+            "Endereço:\n" +
+            "Rua: " + this.rua + "\n" +
+            "Número: " + this.num + "\n" +
+            "Cidade: " + this.cidade + "\n" +
+            "Estado: " + this.uf + "\n\n"
+        );
+    }
+});
 }
 
+let telefone1 = new Telefone('11', '999999999')
+let telefone2 = new Telefone('21', '998877665')
+let telefone3 = new Telefone('31', '987654321')
+let telefone4 = new Telefone('51', '965432187')
 
-let telefone = new Telefone('11', '999999999')
-let endereco = new Endereco('SP', 'Sao Paulo', 'AV. Paulista ', 987)
-let cliente = new Cliente('Carlos Conrado Heinz', telefone, 'carlos.conrado@app.com', endereco)
+let endereco1 = new Endereco('SP', 'São Paulo', 'Av. Paulista', 987)
+let endereco2 = new Endereco('RJ', 'Rio de Janeiro', 'Rua das Laranjeiras', 500)
+let endereco3 = new Endereco('MG', 'Belo Horizonte', 'Av. Afonso Pena', 1234)
+let endereco4 = new Endereco('RS', 'Porto Alegre', 'Rua da Praia', 45)
 
-console.log(cliente.descricao)
-console.log(telefone.descricao)
-console.log(endereco.descricao)
+let cli1 = new Cliente('Carlos Conrado Heinz', telefone1, 'carlos.conrado@app.com', endereco1)
+let cli2 = new Cliente('Mariana Silva Costa', telefone2, 'marisilva123@gmail.com', endereco2)
+let cli3 = new Cliente('Yuri Cardoso Lopes', telefone3, 'yuriclopess@gmail.com', endereco3)
+let cli4 = new Cliente('Bruno Oliveira Ramos', telefone4, 'oliveirabruno42@gmail.com', endereco4)
 
-
-let cli_1 = new Cliente('Mariana Silva Costa', telefone , 'marisilva123@gmail.com', endereco)
-let cli_2 = new Cliente('Yuri Cardoso Lopes', telefone , 'yuriclopess@gmail.com', endereco)
-let cli_3 = new Cliente('Bruno Oliveira Ramos', telefone, 'oliveirabruno42@gmail.com', endereco)
-
-let lista = [cli_1, cli_2, cli_3]
+let lista = [cli1, cli2, cli3, cli4]
 
 function order(lista) {
-    return lista.sort(function(cli_1, cli_2) {
-        if (cli_1.nome.toLowerCase() < cli_2.nome.toLowerCase()) { 
-            return -1
-        }
-        if (cli_1.nome.toLowerCase() > cli_2.nome.toLowerCase()) {
-            return 1 
-        }
-        return 0
+    return lista.sort(function (a, b) {
+        return a.nome.toLowerCase().localeCompare(b.nome.toLowerCase())
     })
 }
 
-let cliOrdem = order(lista) 
+let cliOrdem = order(lista)
 
 cliOrdem.forEach(cliente => {
-    console.log(cliente.getName)
-});
+    console.log(cliente.descricao)
+})
